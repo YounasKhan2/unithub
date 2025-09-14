@@ -187,7 +187,7 @@ export default function TermsOfServicePage() {
               </p>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-gray-700">
-                  <strong>Email:</strong> legal@unithub.com<br />
+                  <strong>Email:</strong> younaskk120@gmail.com<br />
                   <strong>Address:</strong> UnitHub Legal Department<br />
                   123 Conversion Street<br />
                   Tech City, TC 12345

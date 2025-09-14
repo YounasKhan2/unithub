@@ -164,7 +164,7 @@ export default function PrivacyPolicyPage() {
               </p>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-gray-700">
-                  <strong>Email:</strong> privacy@unithub.com<br />
+                  <strong>Email:</strong> younaskk120@gmail.com<br />
                   <strong>Address:</strong> UnitHub Privacy Office<br />
                   123 Conversion Street<br />
                   Tech City, TC 12345

@@ -194,12 +194,20 @@ export default function AboutPage() {
             <p className="text-green-100 mb-6">
               We'd love to hear from you! Whether you have suggestions, questions, or just want to say hello.
             </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 transition-colors"
-            >
-              Get in Touch
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/contact"
+                className="inline-flex items-center bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 transition-colors"
+              >
+                Get in Touch
+              </Link>
+              <a
+                href="mailto:younaskk120@gmail.com"
+                className="inline-flex items-center bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-400 transition-colors"
+              >
+                Email Us Directly
+              </a>
+            </div>
           </div>
         </div>
       </main>

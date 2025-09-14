@@ -21,28 +21,28 @@ export default function ContactPage() {
       icon: QuestionMarkCircleIcon,
       title: 'General Support',
       description: 'Need help using our converters or have questions?',
-      email: 'support@unithub.com',
+      email: 'younaskk120@gmail.com',
       color: 'bg-blue-500'
     },
     {
       icon: BugAntIcon,
       title: 'Bug Reports',
       description: 'Found an issue or error in our calculations?',
-      email: 'bugs@unithub.com',
+      email: 'younaskk120@gmail.com',
       color: 'bg-red-500'
     },
     {
       icon: LightBulbIcon,
       title: 'Feature Requests',
       description: 'Have an idea for improving UnitHub?',
-      email: 'features@unithub.com',
+      email: 'younaskk120@gmail.com',
       color: 'bg-yellow-500'
     },
     {
       icon: HeartIcon,
       title: 'General Feedback',
       description: 'Share your thoughts and suggestions with us',
-      email: 'feedback@unithub.com',
+      email: 'younaskk120@gmail.com',
       color: 'bg-green-500'
     }
   ];
@@ -126,7 +126,7 @@ export default function ContactPage() {
                   <h3 className="font-semibold text-gray-900 mb-2">General Inquiries</h3>
                   <p className="text-gray-600">
                     <EnvelopeIcon className="w-4 h-4 inline mr-2" />
-                    hello@unithub.com
+                    younaskk120@gmail.com
                   </p>
                 </div>
                 
@@ -224,7 +224,7 @@ export default function ContactPage() {
               Don't hesitate to reach out. We're here to help make your unit conversions accurate and easy.
             </p>
             <a
-              href="mailto:hello@unithub.com"
+              href="mailto:younaskk120@gmail.com"
               className="inline-flex items-center bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
             >
               <EnvelopeIcon className="w-5 h-5 mr-2" />
