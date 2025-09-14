@@ -45,8 +45,10 @@ export default function Header() {
           <div className="lg:hidden">
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+              className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-expanded={mobileMenuOpen}
+              aria-label="Toggle mobile menu"
             >
               <span className="sr-only">Open main menu</span>
               {mobileMenuOpen ? (
@@ -59,22 +61,26 @@ export default function Header() {
         </div>
 
         {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden">
-            <div className="space-y-1 pb-3 pt-2">
-              {navigation.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </div>
+        <div className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}>
+          <div className="space-y-1 pb-4 pt-2 bg-gray-50 rounded-b-lg mx-4 shadow-lg">
+            {navigation.map((link, index) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="block rounded-lg mx-2 px-4 py-3 text-base font-medium text-gray-700 hover:bg-white hover:text-blue-600 hover:shadow-sm transition-all duration-200 transform hover:scale-105 active:scale-95"
+                onClick={() => setMobileMenuOpen(false)}
+                style={{
+                  animationDelay: `${index * 50}ms`,
+                  animation: mobileMenuOpen ? 'slideInDown 0.3s ease-out forwards' : 'none'
+                }}
+              >
+                {link.name}
+              </Link>
+            ))}
           </div>
-        )}
+        </div>
       </nav>
     </header>
   );

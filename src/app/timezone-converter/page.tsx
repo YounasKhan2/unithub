@@ -23,6 +23,7 @@ export default function TimezoneConverter() {
   const [worldClock, setWorldClock] = useState(getWorldClockCities());
   const [currentDate, setCurrentDate] = useState(new Date());
   const [error, setError] = useState('');
+  const [isConverting, setIsConverting] = useState(false);
 
   // Auto-detect user timezone on mount
   useEffect(() => {
@@ -50,9 +51,11 @@ export default function TimezoneConverter() {
     if (!isValidTimeFormat(fromTime)) {
       setError('Please enter a valid time in HH:MM format');
       setResult(null);
+      setIsConverting(false);
       return;
     }
 
+    setIsConverting(true);
     try {
       const conversion = convertTimezone(
         fromTime,
@@ -65,11 +68,14 @@ export default function TimezoneConverter() {
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Conversion failed');
       setResult(null);
+    } finally {
+      setTimeout(() => setIsConverting(false), 200); // Small delay for better UX
     }
   }, [fromTime, fromTimezone, toTimezone, currentDate]);
 
   // Debounced conversion
   useEffect(() => {
+    setIsConverting(true);
     const timer = setTimeout(performConversion, 150);
     return () => clearTimeout(timer);
   }, [performConversion]);
@@ -95,20 +101,27 @@ export default function TimezoneConverter() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-6 sm:py-8 mobile-container">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Timezone Converter & World Clock
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 mobile-title-enhanced">
+              🌍 Timezone Converter & World Clock
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 mobile-subtitle-enhanced">
               Convert time between timezones worldwide with real-time accuracy
             </p>
           </div>
 
           {/* Main Converter */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-            <div className="grid lg:grid-cols-3 gap-8">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 mobile-card-enhanced">
+            {/* Error Message */}
+            {error && (
+              <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg mobile-error-enhanced">
+                <div className="text-red-700 text-sm sm:text-base">{error}</div>
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {/* From Section */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -119,7 +132,7 @@ export default function TimezoneConverter() {
                   type="time"
                   value={fromTime}
                   onChange={(e) => setFromTime(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent mb-4"
+                  className="mobile-input-enhanced w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent mb-3 sm:mb-4"
                 />
                 
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -132,7 +145,7 @@ export default function TimezoneConverter() {
                     const tz = worldTimeZones.find(t => t.abbreviation === e.target.value);
                     if (tz) setFromTimezone(tz);
                   }}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="mobile-select-enhanced w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
                   {worldTimeZones.map((tz) => (
                     <option key={`${tz.abbreviation}-${tz.offset}`} value={tz.abbreviation}>
@@ -141,19 +154,20 @@ export default function TimezoneConverter() {
                   ))}
                 </select>
 
-                <div className="mt-3 text-sm text-gray-600">
+                <div className="mt-2 sm:mt-3 text-xs sm:text-sm text-gray-600">
                   Current time: {getCurrentTimeInTimezone(fromTimezone.offset)}
                 </div>
               </div>
 
               {/* Swap Button */}
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center order-last lg:order-none">
                 <button
                   onClick={swapTimezones}
-                  className="p-3 border-2 border-purple-200 rounded-full hover:border-purple-400 hover:bg-purple-50 transition-colors"
+                  className="mobile-touch-feedback p-2 sm:p-3 border-2 border-purple-200 rounded-full hover:border-purple-400 hover:bg-purple-50 transition-all transform hover:scale-110 active:scale-95"
                   title="Swap timezones"
+                  aria-label="Swap timezones"
                 >
-                  <ArrowRightIcon className="w-6 h-6 text-purple-600" />
+                  <ArrowRightIcon className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
                 </button>
               </div>
 
@@ -169,7 +183,7 @@ export default function TimezoneConverter() {
                     const tz = worldTimeZones.find(t => t.abbreviation === e.target.value);
                     if (tz) setToTimezone(tz);
                   }}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent mb-4"
+                  className="mobile-select-enhanced w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent mb-3 sm:mb-4"
                 >
                   {worldTimeZones.map((tz) => (
                     <option key={`${tz.abbreviation}-${tz.offset}`} value={tz.abbreviation}>
@@ -178,28 +192,33 @@ export default function TimezoneConverter() {
                   ))}
                 </select>
                 
-                <div className="p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg">
-                  <h3 className="font-semibold text-gray-900 mb-2 flex items-center">
+                <div className="p-3 sm:p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg mobile-result-enhanced">
+                  <h3 className="font-semibold text-gray-900 mb-2 flex items-center text-sm sm:text-base">
                     <CalendarIcon className="w-4 h-4 mr-1" />
                     Converted Time:
                   </h3>
                   {error ? (
-                    <p className="text-red-600">{error}</p>
+                    <p className="text-red-600 text-sm sm:text-base">{error}</p>
                   ) : result ? (
-                    <div>
-                      <p className="text-2xl font-bold text-purple-600">
+                    <div className="mobile-scale-in">
+                      <p className="text-lg sm:text-xl lg:text-2xl font-bold text-purple-600">
                         {formatTimeWithDay(result)}
                       </p>
-                      <p className="text-sm text-gray-600 mt-1">
+                      <p className="text-xs sm:text-sm text-gray-600 mt-1">
                         Time difference: {result.timeDifference >= 0 ? '+' : ''}{result.timeDifference} hours
                       </p>
                     </div>
+                  ) : isConverting ? (
+                    <div className="flex items-center gap-2">
+                      <div className="mobile-spinner w-4 h-4 border-2 border-purple-300 border-t-purple-600 rounded-full animate-spin"></div>
+                      <p className="text-gray-500 text-sm">Converting...</p>
+                    </div>
                   ) : (
-                    <p className="text-gray-500">Enter time to see conversion</p>
+                    <p className="text-gray-500 text-sm">Enter time to see conversion</p>
                   )}
                 </div>
 
-                <div className="mt-3 text-sm text-gray-600">
+                <div className="mt-2 sm:mt-3 text-xs sm:text-sm text-gray-600">
                   Current time: {getCurrentTimeInTimezone(toTimezone.offset)}
                 </div>
               </div>
@@ -207,9 +226,9 @@ export default function TimezoneConverter() {
           </div>
 
           {/* Popular Timezone Pairs */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Popular Timezone Conversions</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 mobile-card-enhanced">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 mobile-subtitle-enhanced">Popular Timezone Conversions</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {popularPairs.map((pair, index) => (
                 <button
                   key={index}
@@ -217,10 +236,10 @@ export default function TimezoneConverter() {
                     setFromTimezone(pair.from);
                     setToTimezone(pair.to);
                   }}
-                  className="p-4 border border-gray-200 rounded-lg hover:border-purple-300 hover:bg-purple-50 transition-colors text-left"
+                  className="mobile-touch-feedback p-3 sm:p-4 border border-gray-200 rounded-lg hover:border-purple-300 hover:bg-purple-50 transition-all text-left transform hover:scale-105 active:scale-95"
                 >
-                  <div className="font-semibold text-gray-900">{pair.description}</div>
-                  <div className="text-sm text-gray-600 mt-1">
+                  <div className="font-semibold text-gray-900 text-sm sm:text-base">{pair.description}</div>
+                  <div className="text-xs sm:text-sm text-gray-600 mt-1">
                     {pair.from.abbreviation} → {pair.to.abbreviation}
                   </div>
                 </button>
@@ -229,16 +248,16 @@ export default function TimezoneConverter() {
           </div>
 
           {/* World Clock */}
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-              <GlobeAltIcon className="w-6 h-6 mr-2" />
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 mobile-card-enhanced">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center mobile-subtitle-enhanced">
+              <GlobeAltIcon className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
               World Clock
             </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
               {worldClock.map((clock, index) => (
                 <div
                   key={index}
-                  className="p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border hover:shadow-md transition-shadow cursor-pointer"
+                  className="mobile-card p-3 sm:p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border hover:shadow-md transition-all cursor-pointer mobile-fade-in"
                   onClick={() => setQuickTimezone(clock.timezone, false)}
                 >
                   <div className="text-center">

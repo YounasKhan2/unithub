@@ -90,14 +90,14 @@ export default function MeasurementConverter() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 pt-20 pb-16">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 pt-12 sm:pt-16 lg:pt-20 pb-12 sm:pb-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-green-600 rounded-full mb-6">
-            <ScaleIcon className="w-8 h-8 text-white" />
+        <div className="text-center mb-8 sm:mb-12">
+          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-green-600 rounded-full mb-4 sm:mb-6">
+            <ScaleIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             Measurement Converter
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -107,10 +107,10 @@ export default function MeasurementConverter() {
         </div>
 
         {/* Category Tabs */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-          <div className="mb-8">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Select Category</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 mobile-card-enhanced">
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 sm:mb-4 mobile-subtitle-enhanced">Select Category</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 sm:gap-3">
               {Object.entries(measurementCategories).map(([key, category]) => {
                 const IconComponent = categoryIcons[key as keyof typeof categoryIcons];
                 const colorClass = categoryColors[key as keyof typeof categoryColors];
@@ -119,14 +119,14 @@ export default function MeasurementConverter() {
                   <button
                     key={key}
                     onClick={() => handleCategoryChange(key as keyof typeof measurementCategories)}
-                    className={`p-3 rounded-lg border-2 transition-all ${
+                    className={`mobile-touch-feedback p-2 sm:p-3 rounded-lg border-2 transition-all touch-target ${
                       activeCategory === key
-                        ? colorClass
-                        : 'bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100'
+                        ? colorClass + ' transform scale-105 shadow-md'
+                        : 'bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100 hover:shadow-sm'
                     }`}
                   >
-                    <IconComponent className="w-6 h-6 mx-auto mb-1" />
-                    <div className="font-medium text-sm">{category.name}</div>
+                    <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 mx-auto mb-1" />
+                    <div className="font-medium text-xs sm:text-sm leading-tight">{category.name}</div>
                   </button>
                 );
               })}
@@ -135,16 +135,16 @@ export default function MeasurementConverter() {
 
           {/* Error Message */}
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg mobile-error-enhanced">
               <div className="flex items-center gap-2 text-red-700">
-                <span>{error}</span>
+                <span className="text-sm sm:text-base">{error}</span>
               </div>
             </div>
           )}
 
           {/* Quick Amount Buttons */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+          <div className="mb-4 sm:mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">
               Quick amounts
             </label>
             <div className="flex flex-wrap gap-2">
@@ -152,10 +152,10 @@ export default function MeasurementConverter() {
                 <button
                   key={value}
                   onClick={() => selectQuickAmount(value)}
-                  className={`px-4 py-2 rounded-lg border transition-colors ${
+                  className={`mobile-touch-feedback px-3 sm:px-4 py-2 rounded-lg border transition-all transform hover:scale-105 ${
                     amount === value
-                      ? 'bg-green-600 text-white border-green-600'
-                      : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
+                      ? 'bg-green-600 text-white border-green-600 shadow-md'
+                      : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100 hover:shadow-sm'
                   }`}
                 >
                   {value}
@@ -165,7 +165,7 @@ export default function MeasurementConverter() {
           </div>
 
           {/* Converter Form */}
-          <div className="grid md:grid-cols-3 gap-6 items-end">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-end">
             {/* From Unit */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -176,14 +176,15 @@ export default function MeasurementConverter() {
                   type="number"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-lg"
+                  className="mobile-input-enhanced w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-base sm:text-lg"
                   placeholder="Enter amount"
                   step="any"
+                  inputMode="decimal"
                 />
                 <select
                   value={fromUnit}
                   onChange={(e) => setFromUnit(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  className="mobile-select-enhanced w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 >
                   {Object.entries(units).map(([key, unit]) => (
                     <option key={key} value={key}>
@@ -195,13 +196,14 @@ export default function MeasurementConverter() {
             </div>
 
             {/* Swap Button */}
-            <div className="flex justify-center">
+            <div className="flex justify-center order-last md:order-none">
               <button
                 onClick={swapUnits}
-                className="w-12 h-12 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
+                className="mobile-touch-feedback w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-all transform hover:scale-110 active:scale-95"
                 title="Swap units"
+                aria-label="Swap units"
               >
-                <ArrowsRightLeftIcon className="w-6 h-6 text-gray-600" />
+                <ArrowsRightLeftIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" />
               </button>
             </div>
 
@@ -216,18 +218,18 @@ export default function MeasurementConverter() {
                     type="text"
                     value={result || '0'}
                     readOnly
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-lg font-semibold text-gray-900"
+                    className="w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-base sm:text-lg font-semibold text-gray-900 mobile-result-enhanced"
                   />
                   {isCalculating && (
                     <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-green-600"></div>
+                      <div className="mobile-spinner-enhanced w-4 h-4 sm:w-5 sm:h-5 border-2 border-gray-300 border-t-green-600 rounded-full animate-spin"></div>
                     </div>
                   )}
                 </div>
                 <select
                   value={toUnit}
                   onChange={(e) => setToUnit(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  className="mobile-select-enhanced w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 >
                   {Object.entries(units).map(([key, unit]) => (
                     <option key={key} value={key}>
@@ -241,8 +243,8 @@ export default function MeasurementConverter() {
 
           {/* Conversion Formula */}
           {result && !error && (
-            <div className="mt-6 p-4 bg-green-50 rounded-lg">
-              <div className="text-sm text-gray-600">
+            <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-green-50 rounded-lg mobile-success-enhanced mobile-fade-in">
+              <div className="text-sm sm:text-base text-gray-600">
                 <strong>Result:</strong> {amount} {units[fromUnit]?.symbol} = {result} {units[toUnit]?.symbol}
               </div>
             </div>

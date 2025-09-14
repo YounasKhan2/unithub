@@ -4,6 +4,7 @@ import "./globals.css";
 import StructuredData from "@/components/StructuredData";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import TouchOptimization from "@/components/MobileOptimizations";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -85,14 +86,16 @@ export default function RootLayout({
         <StructuredData />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#2563eb" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <Header />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+        <TouchOptimization>
+          <Header />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </TouchOptimization>
       </body>
     </html>
   );

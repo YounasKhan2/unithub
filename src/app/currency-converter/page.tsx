@@ -116,11 +116,11 @@ export default function CurrencyConverter() {
           </div>
 
           {/* Main Converter */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-            <div className="grid lg:grid-cols-3 gap-8">
+          <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 mb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
               {/* From Currency */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-4">
+                <label className="block text-sm font-medium text-gray-700">
                   <CurrencyDollarIcon className="w-4 h-4 inline mr-1" />
                   Amount
                 </label>
@@ -128,19 +128,20 @@ export default function CurrencyConverter() {
                   type="number"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent mb-4"
+                  className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all touch-target"
                   placeholder="Enter amount"
                   min="0"
                   step="0.01"
+                  inputMode="decimal"
                 />
                 
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700">
                   From Currency
                 </label>
                 <select
                   value={fromCurrency}
                   onChange={(e) => setFromCurrency(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent touch-target"
                 >
                   <optgroup label="Popular Currencies">
                     {popularCurrencies.map((currency: CurrencyData) => (
@@ -160,25 +161,26 @@ export default function CurrencyConverter() {
               </div>
 
               {/* Swap Button */}
-              <div className="flex items-center justify-center">
+              <div className="flex lg:items-center justify-center order-3 lg:order-2">
                 <button
                   onClick={swapCurrencies}
-                  className="p-3 border-2 border-green-200 rounded-full hover:border-green-400 hover:bg-green-50 transition-colors"
+                  className="p-4 border-2 border-green-200 rounded-full hover:border-green-400 hover:bg-green-50 transition-all transform hover:scale-105 active:scale-95 touch-target"
                   title="Swap currencies"
+                  aria-label="Swap currencies"
                 >
-                  <ArrowsRightLeftIcon className="w-6 h-6 text-green-600" />
+                  <ArrowsRightLeftIcon className="w-6 h-6 text-green-600 lg:rotate-90" />
                 </button>
               </div>
 
               {/* To Currency */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+              <div className="space-y-4 order-2 lg:order-3">
+                <label className="block text-sm font-medium text-gray-700">
                   To Currency
                 </label>
                 <select
                   value={toCurrency}
                   onChange={(e) => setToCurrency(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent mb-4"
+                  className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent touch-target"
                 >
                   <optgroup label="Popular Currencies">
                     {popularCurrencies.map((currency: CurrencyData) => (
@@ -245,25 +247,26 @@ export default function CurrencyConverter() {
           </div>
 
           {/* Quick Amount Buttons */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Quick Amounts</h2>
-            <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
+          <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 mb-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Quick Amounts</h2>
+            <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3">
               {[1, 5, 10, 25, 50, 100, 500, 1000].map((quickAmount) => (
                 <button
                   key={quickAmount}
                   onClick={() => setAmount(quickAmount.toString())}
-                  className="p-3 border border-gray-200 rounded-lg hover:border-green-300 hover:bg-green-50 transition-colors text-center"
+                  className="p-3 sm:p-4 border border-gray-200 rounded-lg hover:border-green-300 hover:bg-green-50 transition-all text-center font-medium transform hover:scale-105 active:scale-95 touch-target"
+                  aria-label={`Set amount to ${quickAmount}`}
                 >
-                  {quickAmount}
+                  {quickAmount >= 1000 ? `${quickAmount/1000}K` : quickAmount}
                 </button>
               ))}
             </div>
           </div>
 
           {/* Popular Currency Pairs */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Popular Currency Pairs</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 mb-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Popular Currency Pairs</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {[
                 { from: 'USD', to: 'EUR', name: 'Dollar to Euro' },
                 { from: 'USD', to: 'GBP', name: 'Dollar to Pound' },
@@ -278,10 +281,11 @@ export default function CurrencyConverter() {
                     setFromCurrency(pair.from);
                     setToCurrency(pair.to);
                   }}
-                  className="p-4 border border-gray-200 rounded-lg hover:border-green-300 hover:bg-green-50 transition-colors text-left"
+                  className="p-4 border border-gray-200 rounded-lg hover:border-green-300 hover:bg-green-50 transition-all text-left transform hover:scale-105 active:scale-95 touch-target"
+                  aria-label={`Convert ${pair.name}`}
                 >
-                  <div className="font-semibold text-gray-900">{pair.name}</div>
-                  <div className="text-sm text-gray-600 mt-1">
+                  <div className="font-semibold text-gray-900 text-sm sm:text-base">{pair.name}</div>
+                  <div className="text-xs sm:text-sm text-gray-600 mt-1">
                     {getCurrencyByCode(pair.from)?.flag} {pair.from} → {getCurrencyByCode(pair.to)?.flag} {pair.to}
                   </div>
                 </button>
@@ -291,28 +295,28 @@ export default function CurrencyConverter() {
 
           {/* Exchange Rate Table */}
           {result && (
-            <div className="bg-white rounded-2xl shadow-xl p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Exchange Rate Details</h2>
-              <div className="overflow-x-auto">
-                <table className="w-full">
+            <div className="bg-white rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Exchange Rate Details</h2>
+              <div className="overflow-x-auto mobile-scroll">
+                <table className="w-full min-w-[400px]">
                   <thead>
                     <tr className="border-b border-gray-200">
-                      <th className="text-left py-3 px-4">Amount</th>
-                      <th className="text-left py-3 px-4">From</th>
-                      <th className="text-left py-3 px-4">To</th>
-                      <th className="text-left py-3 px-4">Result</th>
+                      <th className="text-left py-3 px-2 sm:px-4 text-sm sm:text-base">Amount</th>
+                      <th className="text-left py-3 px-2 sm:px-4 text-sm sm:text-base">From</th>
+                      <th className="text-left py-3 px-2 sm:px-4 text-sm sm:text-base">To</th>
+                      <th className="text-left py-3 px-2 sm:px-4 text-sm sm:text-base">Result</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr className="border-b border-gray-100">
-                      <td className="py-3 px-4 font-semibold">{result.originalAmount}</td>
-                      <td className="py-3 px-4">
-                        {getCurrencyByCode(fromCurrency)?.flag} {fromCurrency}
+                      <td className="py-3 px-2 sm:px-4 font-semibold text-sm sm:text-base">{result.originalAmount}</td>
+                      <td className="py-3 px-2 sm:px-4 text-sm sm:text-base">
+                        <span className="hidden sm:inline">{getCurrencyByCode(fromCurrency)?.flag} </span>{fromCurrency}
                       </td>
-                      <td className="py-3 px-4">
-                        {getCurrencyByCode(toCurrency)?.flag} {toCurrency}
+                      <td className="py-3 px-2 sm:px-4 text-sm sm:text-base">
+                        <span className="hidden sm:inline">{getCurrencyByCode(toCurrency)?.flag} </span>{toCurrency}
                       </td>
-                      <td className="py-3 px-4 font-semibold text-green-600">
+                      <td className="py-3 px-2 sm:px-4 font-semibold text-green-600 text-sm sm:text-base">
                         {result.convertedAmount.toLocaleString()}
                       </td>
                     </tr>
