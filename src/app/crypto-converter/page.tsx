@@ -186,12 +186,21 @@ export default function CryptoConverter() {
               </div>
 
               {/* In-Content Ad */}
-              <div className="mt-8 p-4 bg-gray-900 rounded-lg border border-gray-700">
+              <div className="mt-8 p-4 bg-gray-900 rounded-lg border border-gray-700" style={{ minHeight: '120px' }}>
+                <div className="text-center text-gray-400 text-sm mb-2">Advertisement</div>
                 <AdUnit 
                   adSlot={ADSENSE_CONFIG.adSlots.inContent}
-                  adFormat="auto"
+                  adFormat="banner"
                   publisherId={ADSENSE_CONFIG.publisherId}
                   className="text-center"
+                  style={{
+                    display: 'block',
+                    width: '320px',
+                    height: '100px',
+                    minWidth: '320px',
+                    minHeight: '100px',
+                    margin: '0 auto'
+                  }}
                 />
               </div>
             </div>

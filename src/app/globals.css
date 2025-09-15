@@ -1,5 +1,31 @@
 @import "tailwindcss";
 
+/* AdSense Specific Styles */
+.adsense-container {
+  min-width: 320px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.adsense-container ins.adsbygoogle {
+  background: transparent !important;
+}
+
+/* Ensure proper sizing for desktop ads */
+@media (min-width: 768px) {
+  .adsense-container.desktop-banner {
+    min-width: 728px;
+    min-height: 90px;
+  }
+  
+  .adsense-container.desktop-rectangle {
+    min-width: 300px;
+    min-height: 250px;
+  }
+}
+
 :root {
   /* Modern Light Color Palette */
   --background: #ffffff;

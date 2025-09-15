@@ -97,8 +97,15 @@ export default function HomePage() {
             adSlot={ADSENSE_CONFIG.adSlots.header}
             adFormat="banner"
             publisherId={ADSENSE_CONFIG.publisherId}
-            className="mx-auto"
-            style={{ display: 'block', width: '728px', height: '90px' }}
+            className="mx-auto desktop-banner"
+            style={{ 
+              display: 'block', 
+              width: '728px', 
+              height: '90px',
+              minWidth: '728px',
+              minHeight: '90px',
+              margin: '0 auto'
+            }}
           />
         </div>
       </section>
@@ -150,12 +157,19 @@ export default function HomePage() {
 
             {/* Ad Card - Desktop Only (takes up 3rd position) */}
             <div className="hidden lg:block">
-              <div className="h-full flex items-center justify-center bg-gray-100 rounded-xl p-4 border border-gray-200">
+              <div className="h-full flex items-center justify-center bg-gray-100 rounded-xl p-4 border border-gray-200" style={{ minHeight: '300px' }}>
                 <AdUnit 
                   adSlot={ADSENSE_CONFIG.adSlots.homeFeature}
-                  adFormat="auto"
+                  adFormat="rectangle"
                   publisherId={ADSENSE_CONFIG.publisherId}
-                  style={{ display: 'block', minHeight: '250px', maxWidth: '300px' }}
+                  className="desktop-rectangle"
+                  style={{ 
+                    display: 'block', 
+                    width: '300px',
+                    height: '250px',
+                    minWidth: '300px', 
+                    minHeight: '250px' 
+                  }}
                 />
               </div>
             </div>
@@ -196,11 +210,21 @@ export default function HomePage() {
 
           {/* Mobile Ad - Below Features */}
           <div className="lg:hidden mt-8 text-center">
-            <AdUnit 
-              adSlot={ADSENSE_CONFIG.adSlots.mobile}
-              adFormat="auto"
-              publisherId={ADSENSE_CONFIG.publisherId}
-            />
+            <div style={{ minWidth: '320px', minHeight: '100px', margin: '0 auto' }}>
+              <AdUnit 
+                adSlot={ADSENSE_CONFIG.adSlots.mobile}
+                adFormat="banner"
+                publisherId={ADSENSE_CONFIG.publisherId}
+                style={{
+                  display: 'block',
+                  width: '320px',
+                  height: '100px',
+                  minWidth: '320px',
+                  minHeight: '100px',
+                  margin: '0 auto'
+                }}
+              />
+            </div>
           </div>
         </div>
       </section>
