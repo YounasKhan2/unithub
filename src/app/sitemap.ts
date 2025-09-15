@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next'
 export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://unithub.com' // Replace with your actual domain
+  const baseUrl = 'https://yourname.freedomain.one' // Replace 'yourname' with your actual domain
 
   return [
     {
@@ -14,6 +14,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/currency-converter`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/crypto-converter`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,

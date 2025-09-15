@@ -33,14 +33,14 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://unithub.com'), // Replace with your actual domain
+  metadataBase: new URL('https://yourname.freedomain.one'), // Replace 'yourname' with your actual domain
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: "UnitHub - Free Professional Unit & Crypto Converter",
     description: "Free professional unit converter for currency exchange rates, cryptocurrency conversion, measurements, and time zone conversions. Fast, accurate, and mobile-friendly.",
-    url: 'https://unithub.com', // Replace with your actual domain
+    url: 'https://yourname.freedomain.one', // Replace 'yourname' with your actual domain
     siteName: 'UnitHub',
     locale: 'en_US',
     type: 'website',
