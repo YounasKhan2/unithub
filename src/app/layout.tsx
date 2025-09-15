@@ -96,6 +96,10 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
+        {/* AdSense Verification Script */}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9113733158673282"
+         crossOrigin="anonymous"></script>
+        
         {/* AdSense Script */}
         <AdSense publisherId={ADSENSE_CONFIG.publisherId} />
       </head>
