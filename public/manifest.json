@@ -1,23 +1,55 @@
 {
-  "name": "UnitHub - Professional Unit Converter",
+  "name": "UnitHub - Professional Unit & Crypto Converter",
   "short_name": "UnitHub",
-  "description": "Free professional unit converter for currency, measurements, and time zones",
+  "description": "Free professional converter for currency, cryptocurrency, measurements, and time zones with live rates",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#2563eb",
+  "theme_color": "#10b981",
   "orientation": "portrait-primary",
-  "categories": ["utilities", "productivity"],
+  "categories": ["utilities", "productivity", "finance"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/favicon.ico",
-      "sizes": "any",
-      "type": "image/x-icon"
+      "sizes": "48x48",
+      "type": "image/x-icon",
+      "purpose": "any"
     },
     {
       "src": "/favicon.svg",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Currency Converter",
+      "short_name": "Currency",
+      "description": "Convert currencies and crypto with live rates",
+      "url": "/currency-converter"
+    },
+    {
+      "name": "Length Converter",
+      "short_name": "Length",
+      "description": "Convert length measurements",
+      "url": "/length-converter"
+    },
+    {
+      "name": "Weight Converter",
+      "short_name": "Weight",
+      "description": "Convert weight measurements",
+      "url": "/weight-converter"
+    },
+    {
+      "name": "Temperature Converter",
+      "short_name": "Temperature",
+      "description": "Convert temperature units",
+      "url": "/temperature-converter"
     }
   ]
 }

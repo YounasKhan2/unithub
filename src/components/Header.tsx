@@ -11,6 +11,7 @@ export default function Header() {
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'Currency', href: '/currency-converter' },
+    { name: 'Crypto', href: '/crypto-converter' },
     { name: 'Measurements', href: '/measurement-converter' },
     { name: 'Time Zones', href: '/timezone-converter' },
     { name: 'Resources', href: '/resources' },

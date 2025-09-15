@@ -23,6 +23,23 @@ export interface ExchangeRates {
 
 // Comprehensive list of world currencies
 export const worldCurrencies: CurrencyData[] = [
+  // Cryptocurrencies
+  { code: 'BTC', name: 'Bitcoin', symbol: '₿', flag: '🟠' },
+  { code: 'ETH', name: 'Ethereum', symbol: 'Ξ', flag: '🔷' },
+  { code: 'BNB', name: 'Binance Coin', symbol: 'BNB', flag: '🟡' },
+  { code: 'ADA', name: 'Cardano', symbol: 'ADA', flag: '🔵' },
+  { code: 'SOL', name: 'Solana', symbol: 'SOL', flag: '🟣' },
+  { code: 'XRP', name: 'Ripple', symbol: 'XRP', flag: '🔴' },
+  { code: 'DOT', name: 'Polkadot', symbol: 'DOT', flag: '⚫' },
+  { code: 'DOGE', name: 'Dogecoin', symbol: 'DOGE', flag: '🐕' },
+  { code: 'AVAX', name: 'Avalanche', symbol: 'AVAX', flag: '❄️' },
+  { code: 'SHIB', name: 'Shiba Inu', symbol: 'SHIB', flag: '🐶' },
+  { code: 'MATIC', name: 'Polygon', symbol: 'MATIC', flag: '🟪' },
+  { code: 'UNI', name: 'Uniswap', symbol: 'UNI', flag: '🦄' },
+  { code: 'LINK', name: 'Chainlink', symbol: 'LINK', flag: '🔗' },
+  { code: 'LTC', name: 'Litecoin', symbol: 'Ł', flag: '⚪' },
+  { code: 'BCH', name: 'Bitcoin Cash', symbol: 'BCH', flag: '🟢' },
+  
   // Major Currencies
   { code: 'USD', name: 'US Dollar', symbol: '$', flag: '🇺🇸' },
   { code: 'EUR', name: 'Euro', symbol: '€', flag: '🇪🇺' },
@@ -339,6 +356,15 @@ export function getCurrencyByCode(code: string): CurrencyData | undefined {
 }
 
 export function getPopularCurrencies(): CurrencyData[] {
-  const popularCodes = ['USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY', 'INR', 'KRW'];
+  const popularCodes = ['BTC', 'ETH', 'USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY'];
   return popularCodes.map(code => getCurrencyByCode(code)!).filter(Boolean);
+}
+
+export function getCryptocurrencies(): CurrencyData[] {
+  const cryptoCodes = ['BTC', 'ETH', 'BNB', 'ADA', 'SOL', 'XRP', 'DOT', 'DOGE', 'AVAX', 'SHIB', 'MATIC', 'UNI', 'LINK', 'LTC', 'BCH'];
+  return cryptoCodes.map(code => getCurrencyByCode(code)!).filter(Boolean);
+}
+
+export function getFiatCurrencies(): CurrencyData[] {
+  return worldCurrencies.filter(currency => !['BTC', 'ETH', 'BNB', 'ADA', 'SOL', 'XRP', 'DOT', 'DOGE', 'AVAX', 'SHIB', 'MATIC', 'UNI', 'LINK', 'LTC', 'BCH'].includes(currency.code));
 }

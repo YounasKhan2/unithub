@@ -11,6 +11,8 @@ import {
 import { 
   worldCurrencies, 
   getPopularCurrencies, 
+  getCryptocurrencies,
+  getFiatCurrencies,
   getCurrencyByCode,
   CurrencyData 
 } from '@/lib/currency';
@@ -27,6 +29,8 @@ interface ConversionResult {
 }
 
   const popularCurrencies = getPopularCurrencies();
+  const cryptoCurrencies = getCryptocurrencies();
+  const fiatCurrencies = getFiatCurrencies();
 
 export default function CurrencyConverter() {
   const [amount, setAmount] = useState<string>('1');
@@ -89,7 +93,7 @@ export default function CurrencyConverter() {
   };
 
   // Filter currencies for dropdown
-    const otherCurrencies = worldCurrencies.filter(
+  const otherFiatCurrencies = fiatCurrencies.filter(
     (currency: CurrencyData) => !popularCurrencies.find((popular: CurrencyData) => popular.code === currency.code)
   );
 
@@ -99,10 +103,10 @@ export default function CurrencyConverter() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Real-Time Currency Converter
+              Real-Time Currency & Crypto Converter
             </h1>
             <p className="text-xl text-gray-600">
-              Convert between 150+ world currencies with live exchange rates
+              Convert between 150+ world currencies and 15 cryptocurrencies with live exchange rates
             </p>
           </div>
 
@@ -134,15 +138,22 @@ export default function CurrencyConverter() {
                   onChange={(e) => setFromCurrency(e.target.value)}
                   className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent touch-target"
                 >
-                  <optgroup label="Popular Currencies">
+                  <optgroup label="🌟 Popular">
                     {popularCurrencies.map((currency: CurrencyData) => (
                       <option key={currency.code} value={currency.code}>
                         {currency.flag} {currency.code} - {currency.name}
                       </option>
                     ))}
                   </optgroup>
-                  <optgroup label="All Currencies">
-                    {otherCurrencies.map((currency: CurrencyData) => (
+                  <optgroup label="₿ Cryptocurrencies">
+                    {cryptoCurrencies.map((currency: CurrencyData) => (
+                      <option key={currency.code} value={currency.code}>
+                        {currency.flag} {currency.code} - {currency.name}
+                      </option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="💵 Fiat Currencies">
+                    {otherFiatCurrencies.map((currency: CurrencyData) => (
                       <option key={currency.code} value={currency.code}>
                         {currency.flag} {currency.code} - {currency.name}
                       </option>
@@ -173,15 +184,22 @@ export default function CurrencyConverter() {
                   onChange={(e) => setToCurrency(e.target.value)}
                   className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent touch-target"
                 >
-                  <optgroup label="Popular Currencies">
+                  <optgroup label="🌟 Popular">
                     {popularCurrencies.map((currency: CurrencyData) => (
                       <option key={currency.code} value={currency.code}>
                         {currency.flag} {currency.code} - {currency.name}
                       </option>
                     ))}
                   </optgroup>
-                  <optgroup label="All Currencies">
-                    {otherCurrencies.map((currency: CurrencyData) => (
+                  <optgroup label="₿ Cryptocurrencies">
+                    {cryptoCurrencies.map((currency: CurrencyData) => (
+                      <option key={currency.code} value={currency.code}>
+                        {currency.flag} {currency.code} - {currency.name}
+                      </option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="💵 Fiat Currencies">
+                    {otherFiatCurrencies.map((currency: CurrencyData) => (
                       <option key={currency.code} value={currency.code}>
                         {currency.flag} {currency.code} - {currency.name}
                       </option>

@@ -5,6 +5,8 @@ import StructuredData from "@/components/StructuredData";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TouchOptimization from "@/components/MobileOptimizations";
+import PWASetup from "@/components/PWASetup";
+import ClientOnlyMeta from "@/components/ClientOnlyMeta";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,8 +23,8 @@ export const metadata: Metadata = {
     template: "%s | UnitHub - Professional Unit Converter",
     default: "UnitHub - Free Professional Unit Converter | Currency, Measurements & Time Zone",
   },
-  description: "Free professional unit converter for currency exchange rates, measurements (length, weight, temperature), and time zone conversions. Fast, accurate, and mobile-friendly.",
-  keywords: ["unit converter", "currency converter", "measurement converter", "time zone converter", "exchange rates", "length converter", "weight converter", "temperature converter"],
+  description: "Free professional unit converter for currency exchange rates, cryptocurrency conversion, measurements (length, weight, temperature), and time zone conversions. Fast, accurate, and mobile-friendly.",
+  keywords: ["unit converter", "currency converter", "cryptocurrency converter", "bitcoin converter", "ethereum converter", "measurement converter", "time zone converter", "exchange rates", "length converter", "weight converter", "temperature converter", "crypto converter"],
   authors: [{ name: "UnitHub" }],
   creator: "UnitHub",
   publisher: "UnitHub",
@@ -36,8 +38,8 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: "UnitHub - Free Professional Unit Converter",
-    description: "Free professional unit converter for currency exchange rates, measurements, and time zone conversions. Fast, accurate, and mobile-friendly.",
+    title: "UnitHub - Free Professional Unit & Crypto Converter",
+    description: "Free professional unit converter for currency exchange rates, cryptocurrency conversion, measurements, and time zone conversions. Fast, accurate, and mobile-friendly.",
     url: 'https://unithub.com', // Replace with your actual domain
     siteName: 'UnitHub',
     locale: 'en_US',
@@ -53,8 +55,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "UnitHub - Free Professional Unit Converter",
-    description: "Free professional unit converter for currency exchange rates, measurements, and time zone conversions.",
+    title: "UnitHub - Free Professional Unit & Crypto Converter",
+    description: "Free professional unit converter for currency exchange rates, cryptocurrency conversion, measurements, and time zone conversions.",
     images: ['/og-image.jpg'], // We'll create this later
   },
   robots: {
@@ -85,12 +87,18 @@ export default function RootLayout({
       <head>
         <StructuredData />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#2563eb" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+        <meta name="theme-color" content="#10b981" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="UnitHub" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
+        <ClientOnlyMeta />
+        <PWASetup />
         <TouchOptimization>
           <Header />
           <main className="flex-grow">{children}</main>

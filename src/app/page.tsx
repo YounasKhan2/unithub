@@ -25,6 +25,13 @@ export default function HomePage() {
       color: 'bg-blue-50 text-blue-600 border-blue-200'
     },
     {
+      icon: CurrencyDollarIcon,
+      title: 'Crypto Converter',
+      description: 'Convert Bitcoin, Ethereum, and 13+ major cryptocurrencies with live prices.',
+      href: '/crypto-converter',
+      color: 'bg-gray-900 text-green-400 border-green-400'
+    },
+    {
       icon: ScaleIcon,
       title: 'Measurement Converter',
       description: 'Convert length, weight, temperature, volume, and more with precision.',
@@ -93,23 +100,33 @@ export default function HomePage() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {features.map((feature, index) => (
               <Link 
                 key={index}
                 href={feature.href}
-                className="group block p-6 sm:p-8 bg-white border border-gray-200 rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 transform active:scale-95"
+                className={`group block p-6 sm:p-8 border rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 transform active:scale-95 ${
+                  feature.title === 'Crypto Converter' 
+                    ? 'bg-gray-900 border-green-400 hover:border-green-300' 
+                    : 'bg-white border-gray-200'
+                }`}
               >
                 <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-lg ${feature.color} flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300 mx-auto sm:mx-0`}>
                   <feature.icon className="w-6 h-6 sm:w-8 sm:h-8" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-3 text-center sm:text-left">
+                <h3 className={`text-lg sm:text-xl font-semibold mb-3 text-center sm:text-left ${
+                  feature.title === 'Crypto Converter' ? 'text-white' : 'text-gray-900'
+                }`}>
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 mb-4 text-center sm:text-left">
+                <p className={`mb-4 text-center sm:text-left ${
+                  feature.title === 'Crypto Converter' ? 'text-gray-300' : 'text-gray-600'
+                }`}>
                   {feature.description}
                 </p>
-                <div className="flex items-center justify-center sm:justify-start text-blue-600 font-medium group-hover:text-blue-700">
+                <div className={`flex items-center justify-center sm:justify-start font-medium group-hover:opacity-80 ${
+                  feature.title === 'Crypto Converter' ? 'text-green-400' : 'text-blue-600 group-hover:text-blue-700'
+                }`}>
                   Try it now
                   <ArrowRightIcon className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
                 </div>

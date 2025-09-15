@@ -1,5 +1,7 @@
 'use client';
 
+import { cryptoAPI } from './cryptoAPI';
+
 interface ExchangeRateResponse {
   base: string;
   rates: Record<string, number>;
@@ -215,6 +217,26 @@ class CurrencyAPI {
     error?: string;
   }> {
     try {
+      // Check if either currency is a cryptocurrency
+      const fromIsCrypto = cryptoAPI.isCryptocurrency(from);
+      const toIsCrypto = cryptoAPI.isCryptocurrency(to);
+
+      // Both are cryptocurrencies
+      if (fromIsCrypto && toIsCrypto) {
+        return await cryptoAPI.convertCrypto(amount, from, to);
+      }
+
+      // From crypto to fiat
+      if (fromIsCrypto && !toIsCrypto) {
+        return await cryptoAPI.convertCryptoToFiat(amount, from, to);
+      }
+
+      // From fiat to crypto
+      if (!fromIsCrypto && toIsCrypto) {
+        return await cryptoAPI.convertFiatToCrypto(amount, from, to);
+      }
+
+      // Both are fiat currencies - use existing logic
       const response = await this.getExchangeRates(from);
       const rate = response.data.rates[to];
 
@@ -233,18 +255,28 @@ class CurrencyAPI {
     }
   }
 
-  // Get popular currency pairs with live rates
+  // Get popular currency pairs with live rates (including crypto)
   async getPopularRates(): Promise<Record<string, number>> {
     try {
-      const usdRates = await this.getExchangeRates('USD');
-      const popularCurrencies = ['EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY'];
+      const [usdRates, cryptoPrices] = await Promise.all([
+        this.getExchangeRates('USD'),
+        cryptoAPI.getTopCryptoPrices()
+      ]);
       
       const rates: Record<string, number> = {};
+      
+      // Add traditional currency rates
+      const popularCurrencies = ['EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY'];
       for (const currency of popularCurrencies) {
         if (usdRates.data.rates[currency]) {
           rates[`USD/${currency}`] = usdRates.data.rates[currency];
         }
       }
+      
+      // Add crypto rates (in USD)
+      Object.entries(cryptoPrices).forEach(([crypto, price]) => {
+        rates[`${crypto}/USD`] = price;
+      });
       
       return rates;
     } catch (error) {
