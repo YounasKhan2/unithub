@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && npm run copy-static",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "copy-static": "cp public/ads.txt out/ads.txt || copy public\\ads.txt out\\ads.txt"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
