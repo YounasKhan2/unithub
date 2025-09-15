@@ -7,6 +7,8 @@ import Footer from "@/components/Footer";
 import TouchOptimization from "@/components/MobileOptimizations";
 import PWASetup from "@/components/PWASetup";
 import ClientOnlyMeta from "@/components/ClientOnlyMeta";
+import AdSense, { AutoAds } from "@/components/AdSense";
+import { ADSENSE_CONFIG } from "@/lib/adsense";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -93,12 +95,16 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="UnitHub" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        {/* AdSense Script */}
+        <AdSense publisherId={ADSENSE_CONFIG.publisherId} />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <ClientOnlyMeta />
         <PWASetup />
+        <AutoAds publisherId={ADSENSE_CONFIG.publisherId} />
         <TouchOptimization>
           <Header />
           <main className="flex-grow">{children}</main>

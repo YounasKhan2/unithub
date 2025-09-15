@@ -12,6 +12,7 @@ import {
   ArrowTrendingUpIcon
 } from '@heroicons/react/24/outline';
 import { measurementCategories, convertRealTime, getCommonConversions } from '@/lib/measurements';
+import MobileBackButton from '@/components/MobileBackButton';
 
 const categoryIcons = {
   length: Square3Stack3DIcon,
@@ -92,6 +93,11 @@ export default function MeasurementConverter() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 pt-12 sm:pt-16 lg:pt-20 pb-12 sm:pb-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Mobile Back Button */}
+        <div className="md:hidden mb-4">
+          <MobileBackButton fallbackUrl="/" />
+        </div>
+
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12">
           <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-green-600 rounded-full mb-4 sm:mb-6">

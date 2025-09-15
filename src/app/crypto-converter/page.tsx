@@ -4,6 +4,9 @@ import { useState, useCallback, useEffect } from "react";
 import { getCryptocurrencies, CurrencyData } from "@/lib/currency";
 import { cryptoAPI } from "@/lib/cryptoAPI";
 import { ArrowsRightLeftIcon, ChartBarIcon } from "@heroicons/react/24/outline";
+import MobileBackButton from "@/components/MobileBackButton";
+import { AdUnit, MobileAd } from "@/components/AdSense";
+import { ADSENSE_CONFIG } from "@/lib/adsense";
 
 export default function CryptoConverter() {
   const [isClient, setIsClient] = useState(false);
@@ -47,16 +50,27 @@ export default function CryptoConverter() {
   }, [amount, fromCrypto, toCrypto, isClient]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-700 text-white">
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4">Cryptocurrency Converter</h1>
-            <p className="text-lg sm:text-xl mb-6 opacity-80 max-w-3xl mx-auto">
-              Convert between Bitcoin, Ethereum, and 13+ major cryptocurrencies with live prices.
-            </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Mobile Back Button */}
+        <div className="md:hidden mb-4">
+          <MobileBackButton fallbackUrl="/" />
+        </div>
+
+        {/* Header */}
+        <div className="text-center mb-8 md:mb-12">
+          <div className="flex items-center justify-center mb-4">
+            <ChartBarIcon className="h-8 w-8 text-blue-600 mr-3" />
+            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Cryptocurrency Converter
+            </h1>
           </div>
+          <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto">
+            Convert between cryptocurrencies with real-time exchange rates
+          </p>
+        </div>
           
+        <main>
           {!isClient ? (
             <div className="bg-gray-800 rounded-lg shadow-lg p-6 text-center">
               <div className="animate-pulse text-lg">Loading crypto converter...</div>
@@ -170,10 +184,26 @@ export default function CryptoConverter() {
                   <div className="text-gray-400">Enter amount and select cryptocurrencies to convert.</div>
                 )}
               </div>
+
+              {/* In-Content Ad */}
+              <div className="mt-8 p-4 bg-gray-900 rounded-lg border border-gray-700">
+                <AdUnit 
+                  adSlot={ADSENSE_CONFIG.adSlots.inContent}
+                  adFormat="auto"
+                  publisherId={ADSENSE_CONFIG.publisherId}
+                  className="text-center"
+                />
+              </div>
             </div>
           )}
-        </div>
-      </main>
+        </main>
+
+        {/* Mobile Sticky Ad */}
+        <MobileAd 
+          adSlot={ADSENSE_CONFIG.adSlots.mobileSticky}
+          publisherId={ADSENSE_CONFIG.publisherId}
+        />
+      </div>
     </div>
   );
 }

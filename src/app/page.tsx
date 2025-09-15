@@ -8,6 +8,8 @@ import {
   StarIcon,
   CheckIcon
 } from '@heroicons/react/24/outline';
+import { AdUnit, MobileAd } from '@/components/AdSense';
+import { ADSENSE_CONFIG } from '@/lib/adsense';
 
 export const metadata: Metadata = {
   title: 'Free Unit Converter | Currency, Measurement & Timezone Calculator - UnitHub',
@@ -88,6 +90,19 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Ad Section - After Hero */}
+      <section className="hidden lg:block py-6 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <AdUnit 
+            adSlot={ADSENSE_CONFIG.adSlots.header}
+            adFormat="banner"
+            publisherId={ADSENSE_CONFIG.publisherId}
+            className="mx-auto"
+            style={{ display: 'block', width: '728px', height: '90px' }}
+          />
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
@@ -101,7 +116,7 @@ export default function HomePage() {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {features.map((feature, index) => (
+            {features.slice(0, 2).map((feature, index) => (
               <Link 
                 key={index}
                 href={feature.href}
@@ -132,6 +147,60 @@ export default function HomePage() {
                 </div>
               </Link>
             ))}
+
+            {/* Ad Card - Desktop Only (takes up 3rd position) */}
+            <div className="hidden lg:block">
+              <div className="h-full flex items-center justify-center bg-gray-100 rounded-xl p-4 border border-gray-200">
+                <AdUnit 
+                  adSlot={ADSENSE_CONFIG.adSlots.homeFeature}
+                  adFormat="auto"
+                  publisherId={ADSENSE_CONFIG.publisherId}
+                  style={{ display: 'block', minHeight: '250px', maxWidth: '300px' }}
+                />
+              </div>
+            </div>
+
+            {/* Remaining features */}
+            {features.slice(2).map((feature, index) => (
+              <Link 
+                key={index + 2}
+                href={feature.href}
+                className={`group block p-6 sm:p-8 border rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1 transform active:scale-95 ${
+                  feature.title === 'Crypto Converter' 
+                    ? 'bg-gray-900 border-green-400 hover:border-green-300' 
+                    : 'bg-white border-gray-200'
+                }`}
+              >
+                <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-lg ${feature.color} flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300 mx-auto sm:mx-0`}>
+                  <feature.icon className="w-6 h-6 sm:w-8 sm:h-8" />
+                </div>
+                <h3 className={`text-lg sm:text-xl font-semibold mb-3 text-center sm:text-left ${
+                  feature.title === 'Crypto Converter' ? 'text-white' : 'text-gray-900'
+                }`}>
+                  {feature.title}
+                </h3>
+                <p className={`mb-4 text-center sm:text-left ${
+                  feature.title === 'Crypto Converter' ? 'text-gray-300' : 'text-gray-600'
+                }`}>
+                  {feature.description}
+                </p>
+                <div className={`flex items-center justify-center sm:justify-start font-medium group-hover:opacity-80 ${
+                  feature.title === 'Crypto Converter' ? 'text-green-400' : 'text-blue-600 group-hover:text-blue-700'
+                }`}>
+                  Try it now
+                  <ArrowRightIcon className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Mobile Ad - Below Features */}
+          <div className="lg:hidden mt-8 text-center">
+            <AdUnit 
+              adSlot={ADSENSE_CONFIG.adSlots.mobile}
+              adFormat="auto"
+              publisherId={ADSENSE_CONFIG.publisherId}
+            />
           </div>
         </div>
       </section>
@@ -303,6 +372,12 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Mobile Sticky Ad */}
+      <MobileAd 
+        adSlot={ADSENSE_CONFIG.adSlots.mobileSticky}
+        publisherId={ADSENSE_CONFIG.publisherId}
+      />
     </div>
   );
 }
