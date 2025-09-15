@@ -14,6 +14,7 @@ import {
   getCurrencyByCode,
   CurrencyData 
 } from '@/lib/currency';
+import { currencyAPI } from '@/lib/currencyAPI';
 
 interface ConversionResult {
   convertedAmount: number;
@@ -22,6 +23,7 @@ interface ConversionResult {
   toCurrency: string;
   originalAmount: number;
   timestamp: string;
+  isLive: boolean;
 }
 
   const popularCurrencies = getPopularCurrencies();
@@ -34,7 +36,7 @@ export default function CurrencyConverter() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>('');
 
-  // Convert currency with real-time updates and error handling
+  // Convert currency with real-time API
   const performConversion = useCallback(async () => {
     const numAmount = parseFloat(amount);
     if (!amount || numAmount <= 0 || isNaN(numAmount)) {
@@ -47,38 +49,27 @@ export default function CurrencyConverter() {
     setError('');
 
     try {
-      // For static export compatibility, use basic conversion rates
-      // In production, this would be replaced with actual API calls
-      const basicRates: Record<string, number> = {
-        'USD': 1,
-        'EUR': 0.85,
-        'GBP': 0.73,
-        'JPY': 110,
-        'CAD': 1.25,
-        'AUD': 1.35,
-        'CHF': 0.92,
-        'CNY': 6.45,
-        'INR': 74.5,
-        'BRL': 5.2
-      };
-
-      const fromRate = basicRates[fromCurrency] || 1;
-      const toRate = basicRates[toCurrency] || 1;
-      const rate = toRate / fromRate;
-      const convertedAmount = numAmount * rate;
+      // Use the robust currency API service
+      const conversion = await currencyAPI.convertCurrency(numAmount, fromCurrency, toCurrency);
 
       setResult({
-        convertedAmount,
-        rate,
+        convertedAmount: conversion.convertedAmount,
+        rate: conversion.rate,
         fromCurrency,
         toCurrency,
         originalAmount: numAmount,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        isLive: conversion.isLive
       });
-      setError('');
+
+      if (conversion.error) {
+        setError(conversion.error);
+      } else {
+        setError('');
+      }
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Conversion failed';
-      setError(errorMessage);
+      console.error('Currency conversion error:', err);
+      setError(err instanceof Error ? err.message : 'Conversion failed');
       setResult(null);
     } finally {
       setIsLoading(false);
@@ -228,19 +219,28 @@ export default function CurrencyConverter() {
                   )}
                   
                   {result && (
-                    <div className="mt-2 text-xs text-gray-500 flex items-center">
-                      <ClockIcon className="w-3 h-3 mr-1" />
-                      Last updated: {new Date(result.timestamp).toLocaleTimeString()}
+                    <div className="mt-2 text-xs text-gray-500 flex items-center justify-between">
+                      <div className="flex items-center">
+                        <ClockIcon className="w-3 h-3 mr-1" />
+                        Last updated: {new Date(result.timestamp).toLocaleTimeString()}
+                      </div>
+                      <div className="flex items-center">
+                        <div className={`w-2 h-2 rounded-full mr-1 ${result.isLive ? 'bg-green-500 animate-pulse' : 'bg-orange-500'}`}></div>
+                        <span className={`font-medium ${result.isLive ? 'text-green-600' : 'text-orange-600'}`}>
+                          {result.isLive ? 'Live Rates' : 'Offline Rates'}
+                        </span>
+                      </div>
                     </div>
                   )}
                   
-                  {/* Demo Notice */}
-                  <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                    <div className="text-xs text-blue-700">
-                      <strong>Demo Mode:</strong> This converter uses static exchange rates for demonstration purposes. 
-                      In production, live rates would be fetched from financial APIs.
+                  {error && !error.includes('offline') && (
+                    <div className="mt-3 p-2 bg-red-50 border border-red-200 rounded-lg">
+                      <div className="text-xs text-red-700 flex items-center">
+                        <ExclamationTriangleIcon className="w-3 h-3 mr-1" />
+                        <span>{error}</span>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
