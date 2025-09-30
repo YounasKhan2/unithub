@@ -89,17 +89,20 @@ export default function RootLayout({
       <head>
         <StructuredData />
         <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/favicon.ico" sizes="48x48" type="image/x-icon" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+        <link rel="icon" href="/icon-192x192.png" sizes="192x192" type="image/png" />
+        <link rel="icon" href="/icon-512x512.png" sizes="512x512" type="image/png" />
         <meta name="theme-color" content="#10b981" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="UnitHub" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        
         {/* AdSense Verification Script */}
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9113733158673282"
          crossOrigin="anonymous"></script>
-        
         {/* AdSense Script */}
         <AdSense publisherId={ADSENSE_CONFIG.publisherId} />
       </head>

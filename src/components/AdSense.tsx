@@ -54,36 +54,36 @@ export function AdUnit({
   className = '',
   publisherId
 }: AdUnitProps) {
-  const [isLoaded, setIsLoaded] = useState(false);
+    const [isClient, setIsClient] = useState(false);
 
-  useEffect(() => {
-    // Add a small delay to ensure the component is properly mounted
-    const timer = setTimeout(() => {
-      if (typeof window !== 'undefined' && (window as any).adsbygoogle) {
-        try {
-          ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
-          setIsLoaded(true);
-        } catch (err) {
-          console.error('AdSense error:', err);
+    useEffect(() => {
+      setIsClient(true);
+      const timer = setTimeout(() => {
+        if (typeof window !== 'undefined' && (window as any).adsbygoogle) {
+          try {
+            ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+          } catch (err) {
+            console.error('AdSense error:', err);
+          }
         }
-      }
-    }, 100);
+      }, 100);
+      return () => clearTimeout(timer);
+    }, []);
 
-    return () => clearTimeout(timer);
-  }, []);
+    if (!isClient) return null;
 
-  return (
-    <div className={`adsense-container ${className}`} style={{ minWidth: '320px', minHeight: '50px' }}>
-      <ins
-        className="adsbygoogle"
-        style={style}
-        data-ad-client={publisherId}
-        data-ad-slot={adSlot}
-        data-ad-format={adFormat}
-        data-full-width-responsive={fullWidthResponsive.toString()}
-      />
-    </div>
-  );
+    return (
+      <div className={`adsense-container ${className}`} style={{ minWidth: '320px', minHeight: '50px' }}>
+        <ins
+          className="adsbygoogle"
+          style={style}
+          data-ad-client={publisherId}
+          data-ad-slot={adSlot}
+          data-ad-format={adFormat}
+          data-full-width-responsive={fullWidthResponsive.toString()}
+        />
+      </div>
+    );
 }
 
 // Mobile Sticky Ad Component

@@ -12,6 +12,17 @@ export default function PWASetup() {
   useEffect(() => {
     if (!isClient) return;
 
+    // Helper: Detect if running as PWA (standalone mode)
+    function isStandalone() {
+      if (typeof window === 'undefined') return false;
+      // Desktop Chrome/Edge/Opera, Android Chrome, iOS Safari
+      return (
+        window.matchMedia('(display-mode: standalone)').matches ||
+        (window.navigator as any).standalone === true ||
+        document.referrer.startsWith('android-app://')
+      );
+    }
+
     // Register service worker
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js')
@@ -23,25 +34,23 @@ export default function PWASetup() {
         });
     }
 
+    // If running as PWA, do not show any install banners
+    if (isStandalone()) {
+      return;
+    }
+
     // Handle install prompt
     let deferredPrompt: any;
-    
     if (typeof window !== 'undefined') {
       window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
         e.preventDefault();
-        // Stash the event so it can be triggered later
         deferredPrompt = e;
-        
-        // Show install button or banner
         showInstallPrompt();
       });
     }
 
     function showInstallPrompt() {
       if (typeof document === 'undefined') return;
-      
-      // Create install prompt UI
       const installBanner = document.createElement('div');
       installBanner.id = 'install-banner';
       installBanner.className = 'fixed top-4 left-4 right-4 sm:left-6 sm:right-6 bg-green-600 text-white p-3 sm:p-4 rounded-lg shadow-lg z-50 transition-all duration-300';
@@ -63,10 +72,7 @@ export default function PWASetup() {
           </div>
         </div>
       `;
-
       document.body.appendChild(installBanner);
-
-      // Handle install button click
       document.getElementById('install-btn')?.addEventListener('click', () => {
         if (deferredPrompt) {
           deferredPrompt.prompt();
@@ -81,14 +87,10 @@ export default function PWASetup() {
           });
         }
       });
-
-      // Handle dismiss button
       document.getElementById('dismiss-btn')?.addEventListener('click', () => {
         installBanner.remove();
         localStorage.setItem('install-dismissed', 'true');
       });
-
-      // Auto-hide after 10 seconds
       setTimeout(() => {
         if (document.getElementById('install-banner')) {
           installBanner.remove();
@@ -102,25 +104,23 @@ export default function PWASetup() {
     }
 
     // iOS install prompt (since iOS doesn't support beforeinstallprompt)
+    function isIOS() {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent);
+    }
+    function isInStandaloneMode() {
+      if (typeof window === 'undefined') return false;
+      return (
+        window.matchMedia('(display-mode: standalone)').matches ||
+        (window.navigator as any).standalone === true
+      );
+    }
     if (isIOS() && !isInStandaloneMode()) {
       setTimeout(() => {
         showIOSInstallPrompt();
       }, 3000);
     }
-
-    function isIOS() {
-      return /iPad|iPhone|iPod/.test(navigator.userAgent);
-    }
-
-    function isInStandaloneMode() {
-      if (typeof window === 'undefined') return false;
-      return (window.matchMedia('(display-mode: standalone)').matches) || 
-             (window.navigator as any).standalone === true;
-    }
-
     function showIOSInstallPrompt() {
       if (typeof document === 'undefined') return;
-      
       const iosPrompt = document.createElement('div');
       iosPrompt.className = 'fixed top-4 left-4 right-4 sm:left-6 sm:right-6 bg-blue-600 text-white p-3 sm:p-4 rounded-lg shadow-lg z-50 transition-all duration-300';
       iosPrompt.innerHTML = `
@@ -143,16 +143,13 @@ export default function PWASetup() {
           </button>
         </div>
       `;
-      
       document.body.appendChild(iosPrompt);
-      
       setTimeout(() => {
         if (iosPrompt.parentNode) {
           iosPrompt.remove();
         }
       }, 15000);
     }
-
   }, [isClient]);
 
   // Only render on client side to prevent hydration issues
