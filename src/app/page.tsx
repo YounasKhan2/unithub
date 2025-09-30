@@ -156,6 +156,7 @@ export default function HomePage() {
             ))}
 
             {/* Ad Card - Desktop Only (takes up 3rd position) */}
+            {/**
             <div className="hidden lg:block">
               <div className="h-full flex items-center justify-center bg-gray-100 rounded-xl p-4 border border-gray-200" style={{ minHeight: '300px' }}>
                 <AdUnit 
@@ -173,6 +174,7 @@ export default function HomePage() {
                 />
               </div>
             </div>
+            */}
 
             {/* Remaining features */}
             {features.slice(2).map((feature, index) => (
