@@ -86,7 +86,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
+  <head>
         <StructuredData />
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" sizes="48x48" type="image/x-icon" />
@@ -105,6 +105,26 @@ export default function RootLayout({
          crossOrigin="anonymous"></script>
         {/* AdSense Script */}
         <AdSense publisherId={ADSENSE_CONFIG.publisherId} />
+
+        {/* Google Analytics */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+                `,
+              }}
+            />
+          </>
+        )}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
