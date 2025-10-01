@@ -93,6 +93,8 @@ export default function RootLayout({
     <html lang="en">
   <head>
         <StructuredData />
+    {/* AdSense site verification meta - helps AdSense verify your site */}
+    <meta name="google-adsense-account" content="ca-pub-9113733158673282" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" sizes="48x48" type="image/x-icon" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

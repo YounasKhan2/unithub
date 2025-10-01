@@ -125,7 +125,6 @@ const FALLBACK_API_URL = 'https://api.fxratesapi.com/latest';
 // Rate limiting: 1000 calls per hour
 const rateLimiter = new RateLimiter();
 const cache = CacheManager.getInstance();
-const offlineManager = OfflineManager.getInstance();
 
 // Fallback exchange rates (approximate, updated periodically)
 const FALLBACK_RATES: Record<string, number> = {
@@ -179,7 +178,17 @@ export async function fetchExchangeRates(baseCurrency: string = 'USD'): Promise<
   }
 
   // Check if offline
-  if (!offlineManager.getStatus()) {
+  // Lazily acquire OfflineManager to avoid SSR navigator references
+  const isOnline = (() => {
+    try {
+      const mgr = OfflineManager.getInstance();
+      return mgr.getStatus();
+    } catch {
+      return true;
+    }
+  })();
+
+  if (!isOnline) {
     const fallbackRates = getFallbackRates(baseCurrency);
     return {
       success: true,
