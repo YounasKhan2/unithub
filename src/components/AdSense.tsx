@@ -132,3 +132,95 @@ export function MobileAd({ adSlot, publisherId }: MobileAdProps) {
     </div>
   );
 }
+
+// In-Article Ad Component (native ad inside content)
+interface ArticleAdProps {
+  adSlot: string;
+  publisherId: string;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+export function ArticleAd({ adSlot, publisherId, className = '', style }: ArticleAdProps) {
+  const [isClient, setIsClient] = useState(false);
+  const [pushed, setPushed] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient || pushed) return;
+    const t = setTimeout(() => {
+      try {
+        // Only push when adsbygoogle exists
+        if (typeof window !== 'undefined' && (window as any).adsbygoogle) {
+          ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+          setPushed(true);
+        }
+      } catch (err) {
+        console.error('AdSense ArticleAd error:', err);
+      }
+    }, 100);
+    return () => clearTimeout(t);
+  }, [isClient, pushed]);
+
+  if (!isClient) return null;
+
+  return (
+    <div className={`my-8 ${className}`}>
+      <ins
+        className="adsbygoogle"
+        style={{ display: 'block', textAlign: 'center', minHeight: '100px', ...style }}
+        data-ad-layout="in-article"
+        data-ad-format="fluid"
+        data-ad-client={publisherId}
+        data-ad-slot={adSlot}
+      />
+    </div>
+  );
+}
+
+// Multiplex Ad Component (autorelaxed feed)
+interface MultiplexAdProps {
+  adSlot: string;
+  publisherId: string;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+export function MultiplexAd({ adSlot, publisherId, className = '', style }: MultiplexAdProps) {
+  const [isClient, setIsClient] = useState(false);
+  const [pushed, setPushed] = useState(false);
+
+  useEffect(() => setIsClient(true), []);
+
+  useEffect(() => {
+    if (!isClient || pushed) return;
+    const t = setTimeout(() => {
+      try {
+        if (typeof window !== 'undefined' && (window as any).adsbygoogle) {
+          ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+          setPushed(true);
+        }
+      } catch (err) {
+        console.error('AdSense MultiplexAd error:', err);
+      }
+    }, 100);
+    return () => clearTimeout(t);
+  }, [isClient, pushed]);
+
+  if (!isClient) return null;
+
+  return (
+    <div className={className} style={style}>
+      <ins
+        className="adsbygoogle"
+        style={{ display: 'block' }}
+        data-ad-format="autorelaxed"
+        data-ad-client={publisherId}
+        data-ad-slot={adSlot}
+      />
+    </div>
+  );
+}

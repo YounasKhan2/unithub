@@ -1,72 +1,69 @@
+import { AdUnit, MobileAd } from '../../components/AdSense';
+import { ADSENSE_CONFIG } from '../../lib/adsense';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { 
-  CalculatorIcon, 
-  AcademicCapIcon,
+import {
+  CalculatorIcon,
+  CheckIcon,
   GlobeAltIcon,
   ChartBarIcon,
+  AcademicCapIcon,
   InformationCircleIcon,
-  ArrowRightIcon,
-  CheckIcon
+  ArrowRightIcon
 } from '@heroicons/react/24/outline';
 
-export const metadata: Metadata = {
-  title: 'Resources & Conversion Charts | UnitHub',
-  description: 'Comprehensive unit conversion resources, charts, formulas, and educational content for currency, measurements, and time zones.',
-  keywords: 'unit conversion charts, measurement formulas, currency rates, time zone information, conversion resources',
-};
-
 export default function ResourcesPage() {
+  // Conversion charts array
   const conversionCharts = [
-    {
-      title: 'Length Conversions',
-      icon: CalculatorIcon,
-      description: 'Comprehensive length and distance conversion charts',
-      items: [
-        '1 meter = 3.28084 feet',
-        '1 kilometer = 0.621371 miles',
-        '1 inch = 2.54 centimeters',
-        '1 yard = 0.9144 meters',
-        '1 nautical mile = 1.852 kilometers'
-      ]
-    },
-    {
-      title: 'Weight & Mass',
-      icon: CalculatorIcon,
-      description: 'Weight and mass conversion reference',
-      items: [
-        '1 kilogram = 2.20462 pounds',
-        '1 pound = 453.592 grams',
-        '1 ounce = 28.3495 grams',
-        '1 ton (metric) = 1000 kilograms',
-        '1 stone = 14 pounds = 6.35029 kg'
-      ]
-    },
-    {
-      title: 'Temperature Scales',
-      icon: CalculatorIcon,
-      description: 'Temperature conversion formulas and references',
-      items: [
-        'Celsius to Fahrenheit: (°C × 9/5) + 32',
-        'Fahrenheit to Celsius: (°F - 32) × 5/9',
-        'Celsius to Kelvin: °C + 273.15',
-        'Water freezes: 0°C = 32°F = 273.15K',
-        'Water boils: 100°C = 212°F = 373.15K'
-      ]
-    },
-    {
-      title: 'Volume & Capacity',
-      icon: CalculatorIcon,
-      description: 'Volume and liquid measurement conversions',
-      items: [
-        '1 liter = 0.264172 US gallons',
-        '1 US gallon = 3.78541 liters',
-        '1 US cup = 236.588 milliliters',
-        '1 tablespoon = 14.7868 ml',
-        '1 cubic meter = 1000 liters'
-      ]
-    }
-  ];
+  {
+    title: 'Length Conversions',
+    icon: CalculatorIcon,
+    description: 'Comprehensive length and distance conversion charts',
+    items: [
+      '1 meter = 3.28084 feet',
+      '1 kilometer = 0.621371 miles',
+      '1 inch = 2.54 centimeters',
+      '1 yard = 0.9144 meters',
+      '1 nautical mile = 1.852 kilometers'
+    ]
+  },
+  {
+    title: 'Weight & Mass',
+    icon: CalculatorIcon,
+    description: 'Weight and mass conversion reference',
+    items: [
+      '1 kilogram = 2.20462 pounds',
+      '1 pound = 453.592 grams',
+      '1 ounce = 28.3495 grams',
+      '1 ton (metric) = 1000 kilograms',
+      '1 stone = 14 pounds = 6.35029 kg'
+    ]
+  },
+  {
+    title: 'Temperature Scales',
+    icon: CalculatorIcon,
+    description: 'Temperature conversion formulas and references',
+    items: [
+      'Celsius to Fahrenheit: (°C × 9/5) + 32',
+      'Fahrenheit to Celsius: (°F - 32) × 5/9',
+      'Celsius to Kelvin: °C + 273.15',
+      'Water freezes: 0°C = 32°F = 273.15K',
+      'Water boils: 100°C = 212°F = 373.15K'
+    ]
+  },
+  {
+    title: 'Volume & Capacity',
+    icon: CalculatorIcon,
+    description: 'Volume and liquid measurement conversions',
+    items: [
+      '1 liter = 0.264172 US gallons',
+      '1 US gallon = 3.78541 liters',
+      '1 US cup = 236.588 milliliters',
+      '1 tablespoon = 14.7868 ml',
+      '1 cubic meter = 1000 liters'
+    ]
+  }
+];
 
   const currencyResources = [
     {
@@ -173,6 +170,20 @@ export default function ResourcesPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+      {/* Desktop Header Ad */}
+      <div className="hidden lg:block py-6 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <AdUnit 
+            adSlot={ADSENSE_CONFIG.adSlots.header}
+            adFormat="banner"
+            publisherId={ADSENSE_CONFIG.publisherId}
+            className="mx-auto desktop-banner"
+            style={{ display: 'block', width: '728px', height: '90px', minWidth: '728px', minHeight: '90px', margin: '0 auto' }}
+          />
+        </div>
+      </div>
+      {/* Mobile Sticky Ad */}
+      <MobileAd adSlot={ADSENSE_CONFIG.adSlots.mobileSticky} publisherId={ADSENSE_CONFIG.publisherId} />
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
@@ -236,6 +247,16 @@ export default function ResourcesPage() {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* In-Content Ad between sections */}
+          <div className="my-8">
+            <AdUnit 
+              adSlot={ADSENSE_CONFIG.adSlots.inContent}
+              adFormat="auto"
+              publisherId={ADSENSE_CONFIG.publisherId}
+              style={{ display: 'block', minWidth: '320px', minHeight: '100px', margin: '0 auto' }}
+            />
           </div>
 
           {/* Currency Resources */}

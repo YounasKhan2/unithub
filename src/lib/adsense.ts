@@ -3,14 +3,14 @@ export const ADSENSE_CONFIG = {
   adSlots: {
     // You'll need to create these ad units in your AdSense dashboard
     // For now, using placeholder values - replace with actual slot IDs from AdSense
-    header: '1234567890',        // Header banner (728x90)
-    sidebar: '1234567891',       // Sidebar ads (300x250)
-    footer: '1234567892',        // Footer banner (728x90)
-    inContent: '1234567893',     // In-content ads (responsive)
-    mobile: '1234567894',        // Mobile banner (320x50)
-    mobileSticky: '1234567895',  // Mobile sticky bottom (320x50)
-    converter: '1234567896',     // Converter pages specific
-    homeFeature: '1234567897',   // Home page feature section
+  header: '9414284841',        // Home_Header_728x90
+  sidebar: '7773900113',       // Sidebar_300x250
+  homeFeature: '2343455941',   // Rectangle Ads (desktop 3rd card)
+  footer: '9414284841',        // Footer banner (728x90)
+  inContent: '1234567893',     // In-content ads (responsive)
+  mobile: '9414284841',        // Mobile banner (320x50)
+  mobileSticky: '9414284841',  // Mobile sticky bottom (320x50)
+  converter: '9414284841',     // Converter pages specific
   }
 };
 

@@ -35,22 +35,24 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://yourname.freedomain.one'), // Replace 'yourname' with your actual domain
+  // Use env for canonical site URL; ensure NEXT_PUBLIC_SITE_URL is set in hosting env
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: "UnitHub - Free Professional Unit & Crypto Converter",
     description: "Free professional unit converter for currency exchange rates, cryptocurrency conversion, measurements, and time zone conversions. Fast, accurate, and mobile-friendly.",
-    url: 'https://yourname.freedomain.one', // Replace 'yourname' with your actual domain
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com',
     siteName: 'UnitHub',
     locale: 'en_US',
     type: 'website',
     images: [
       {
-        url: '/og-image.jpg', // We'll create this later
-        width: 1200,
-        height: 630,
+        // Use existing icon as a fallback OG image; replace with a proper 1200x630 image later
+        url: '/icon-512x512.png',
+        width: 512,
+        height: 512,
         alt: 'UnitHub - Professional Unit Converter',
       },
     ],
@@ -59,7 +61,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "UnitHub - Free Professional Unit & Crypto Converter",
     description: "Free professional unit converter for currency exchange rates, cryptocurrency conversion, measurements, and time zone conversions.",
-    images: ['/og-image.jpg'], // We'll create this later
+    images: ['/icon-512x512.png'],
   },
   robots: {
     index: true,
@@ -100,10 +102,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="UnitHub" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* AdSense Verification Script */}
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9113733158673282"
-         crossOrigin="anonymous"></script>
-        {/* AdSense Script */}
+  {/* AdSense Script */}
         <AdSense publisherId={ADSENSE_CONFIG.publisherId} />
 
         {/* Google Analytics */}

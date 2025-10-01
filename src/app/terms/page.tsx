@@ -1,3 +1,5 @@
+import { AdUnit, MobileAd } from '../../components/AdSense';
+import { ADSENSE_CONFIG } from '../../lib/adsense';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
@@ -10,8 +12,25 @@ export const metadata: Metadata = {
 
 export default function TermsOfServicePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      <main className="container mx-auto px-4 py-8">
+    <>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+        {/* Desktop Header Ad */}
+        <div className="hidden lg:block py-6 bg-gray-50">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <AdUnit 
+              adSlot={ADSENSE_CONFIG.adSlots.header}
+              adFormat="banner"
+              publisherId={ADSENSE_CONFIG.publisherId}
+              className="mx-auto desktop-banner"
+              style={{ display: 'block', width: '728px', height: '90px', minWidth: '728px', minHeight: '90px', margin: '0 auto' }}
+            />
+          </div>
+        </div>
+        {/* Mobile Sticky Ad */}
+        <MobileAd adSlot={ADSENSE_CONFIG.adSlots.mobileSticky} publisherId={ADSENSE_CONFIG.publisherId} />
+        <main className="container mx-auto px-4 py-8">
+          {/* ...existing code... */}
+        </main>
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -88,6 +107,16 @@ export default function TermsOfServicePage() {
                 Your privacy is important to us. Please review our Privacy Policy, which also governs your use of the Service, to understand our practices regarding the collection and use of your information.
               </p>
             </section>
+
+            {/* In-Content Advertisement */}
+            <div className="my-6">
+              <AdUnit 
+                adSlot={ADSENSE_CONFIG.adSlots.inContent}
+                adFormat="auto"
+                publisherId={ADSENSE_CONFIG.publisherId}
+                style={{ display: 'block', minWidth: '320px', minHeight: '100px', margin: '0 auto' }}
+              />
+            </div>
 
             {/* Service Availability */}
             <section>
@@ -206,7 +235,7 @@ export default function TermsOfServicePage() {
             </Link>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </>
   );
 }

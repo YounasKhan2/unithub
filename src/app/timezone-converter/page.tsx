@@ -1,3 +1,5 @@
+import { AdUnit, MobileAd } from '../../components/AdSense';
+import { ADSENSE_CONFIG } from '../../lib/adsense';
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
@@ -203,25 +205,11 @@ export default function TimezoneConverter() {
                     <CalendarIcon className="w-4 h-4 mr-1" />
                     Converted Time:
                   </h3>
-                  {error ? (
-                    <p className="text-red-600 text-sm sm:text-base">{error}</p>
-                  ) : result ? (
-                    <div className="mobile-scale-in">
-                      <p className="text-lg sm:text-xl lg:text-2xl font-bold text-purple-600">
-                        {formatTimeWithDay(result)}
-                      </p>
-                      <p className="text-xs sm:text-sm text-gray-600 mt-1">
-                        Time difference: {result.timeDifference >= 0 ? '+' : ''}{result.timeDifference} hours
-                      </p>
-                    </div>
-                  ) : isConverting ? (
-                    <div className="flex items-center gap-2">
-                      <div className="mobile-spinner w-4 h-4 border-2 border-purple-300 border-t-purple-600 rounded-full animate-spin"></div>
-                      <p className="text-gray-500 text-sm">Converting...</p>
-                    </div>
-                  ) : (
-                    <p className="text-gray-500 text-sm">Enter time to see conversion</p>
-                  )}
+                  <div className="text-lg font-bold text-purple-700">
+                    {result
+                      ? formatTimeWithDay(result)
+                      : '--'}
+                  </div>
                 </div>
 
                 <div className="mt-2 sm:mt-3 text-xs sm:text-sm text-gray-600">

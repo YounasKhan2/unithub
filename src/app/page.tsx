@@ -8,7 +8,7 @@ import {
   StarIcon,
   CheckIcon
 } from '@heroicons/react/24/outline';
-import { AdUnit, MobileAd } from '@/components/AdSense';
+import { AdUnit, MobileAd, MultiplexAd } from '@/components/AdSense';
 import { ADSENSE_CONFIG } from '@/lib/adsense';
 
 export const metadata: Metadata = {
@@ -156,25 +156,16 @@ export default function HomePage() {
             ))}
 
             {/* Ad Card - Desktop Only (takes up 3rd position) */}
-            {/**
             <div className="hidden lg:block">
               <div className="h-full flex items-center justify-center bg-gray-100 rounded-xl p-4 border border-gray-200" style={{ minHeight: '300px' }}>
-                <AdUnit 
-                  adSlot={ADSENSE_CONFIG.adSlots.homeFeature}
-                  adFormat="rectangle"
+                {/* Multiplex AdSense Ad */}
+                <MultiplexAd 
+                  adSlot="8379021884" 
                   publisherId={ADSENSE_CONFIG.publisherId}
-                  className="desktop-rectangle"
-                  style={{ 
-                    display: 'block', 
-                    width: '300px',
-                    height: '250px',
-                    minWidth: '300px', 
-                    minHeight: '250px' 
-                  }}
                 />
               </div>
             </div>
-            */}
+            
 
             {/* Remaining features */}
             {features.slice(2).map((feature, index) => (

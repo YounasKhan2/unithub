@@ -1,3 +1,5 @@
+import { AdUnit, MobileAd } from '../../components/AdSense';
+import { ADSENSE_CONFIG } from '../../lib/adsense';
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -91,7 +93,26 @@ export default function MeasurementConverter() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 pt-12 sm:pt-16 lg:pt-20 pb-12 sm:pb-16">
+    <>
+    
+      {/* Desktop Header Ad */}
+      <div className="hidden lg:block py-6 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <AdUnit 
+            adSlot={ADSENSE_CONFIG.adSlots.header}
+            adFormat="banner"
+            publisherId={ADSENSE_CONFIG.publisherId}
+            className="mx-auto desktop-banner"
+            style={{ display: 'block', width: '728px', height: '90px', minWidth: '728px', minHeight: '90px', margin: '0 auto' }}
+          />
+        </div>
+      </div>
+      {/* Mobile Sticky Ad */}
+      <MobileAd adSlot={ADSENSE_CONFIG.adSlots.mobileSticky} publisherId={ADSENSE_CONFIG.publisherId} />
+      {/* Main Content */}
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 pt-12 sm:pt-16 lg:pt-20 pb-12 sm:pb-16">
+        {/* ...existing code... */}
+   
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Mobile Back Button */}
         <div className="md:hidden mb-4">
@@ -312,5 +333,6 @@ export default function MeasurementConverter() {
         </div>
       </div>
     </div>
+    </>
   );
 }

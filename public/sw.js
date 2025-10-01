@@ -2,19 +2,22 @@ const CACHE_NAME = 'unithub-v1';
 const urlsToCache = [
   '/',
   '/currency-converter',
-  '/length-converter',
-  '/weight-converter',
-  '/temperature-converter',
-  '/area-converter',
-  '/volume-converter',
-  '/speed-converter',
-  '/time-converter',
+  '/crypto-converter',
+  '/measurement-converter',
+  '/timezone-converter',
+  '/usd-to-eur',
+  '/feet-to-meters',
+  '/pounds-to-kg',
+  '/resources',
   '/about',
   '/privacy',
   '/terms',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
-  '/manifest.json'
+  '/manifest.json',
+  '/icon-192x192.png',
+  '/icon-512x512.png',
+  '/apple-touch-icon.png',
+  '/favicon.ico',
+  '/favicon.svg'
 ];
 
 // Install event - cache resources

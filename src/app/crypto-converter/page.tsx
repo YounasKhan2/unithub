@@ -50,7 +50,24 @@ export default function CryptoConverter() {
   }, [amount, fromCrypto, toCrypto, isClient]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+    <>
+      {/* Desktop Header Ad */}
+      <div className="hidden lg:block py-6 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <AdUnit 
+            adSlot={ADSENSE_CONFIG.adSlots.header}
+            adFormat="banner"
+            publisherId={ADSENSE_CONFIG.publisherId}
+            className="mx-auto desktop-banner"
+            style={{ display: 'block', width: '728px', height: '90px', minWidth: '728px', minHeight: '90px', margin: '0 auto' }}
+          />
+        </div>
+      </div>
+      {/* Mobile Sticky Ad */}
+      <MobileAd adSlot={ADSENSE_CONFIG.adSlots.mobileSticky} publisherId={ADSENSE_CONFIG.publisherId} />
+      {/* Main Content */}
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+        {/* ...existing code... */}
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Mobile Back Button */}
         <div className="md:hidden mb-4">
@@ -214,5 +231,6 @@ export default function CryptoConverter() {
         />
       </div>
     </div>
+    </>
   );
 }

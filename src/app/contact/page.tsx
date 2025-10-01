@@ -1,3 +1,5 @@
+import { AdUnit, MobileAd } from '../../components/AdSense';
+import { ADSENSE_CONFIG } from '../../lib/adsense';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { 
@@ -75,8 +77,25 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
-      <main className="container mx-auto px-4 py-8">
+    <>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+        {/* Desktop Header Ad */}
+        <div className="hidden lg:block py-6 bg-gray-50">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <AdUnit 
+              adSlot={ADSENSE_CONFIG.adSlots.header}
+              adFormat="banner"
+              publisherId={ADSENSE_CONFIG.publisherId}
+              className="mx-auto desktop-banner"
+              style={{ display: 'block', width: '728px', height: '90px', minWidth: '728px', minHeight: '90px', margin: '0 auto' }}
+            />
+          </div>
+        </div>
+        {/* Mobile Sticky Ad */}
+        <MobileAd adSlot={ADSENSE_CONFIG.adSlots.mobileSticky} publisherId={ADSENSE_CONFIG.publisherId} />
+        <main className="container mx-auto px-4 py-8">
+          {/* ...existing code... */}
+        </main>
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -230,9 +249,9 @@ export default function ContactPage() {
               <EnvelopeIcon className="w-5 h-5 mr-2" />
               Send Us an Email
             </a>
-          </div>
+         </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </>
   );
 }
