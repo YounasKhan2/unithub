@@ -8,6 +8,8 @@ import TouchOptimization from "@/components/MobileOptimizations";
 import PWASetup from "@/components/PWASetup";
 import ClientOnlyMeta from "@/components/ClientOnlyMeta";
 import AdSense, { AutoAds } from "@/components/AdSense";
+import Analytics from "@/components/Analytics";
+import Script from "next/script";
 import { ADSENSE_CONFIG } from "@/lib/adsense";
 
 const geistSans = Geist({
@@ -108,20 +110,20 @@ export default function RootLayout({
         {/* Google Analytics */}
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
-            <script
+            <Script
+              id="ga4-script"
               async
               src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              strategy="afterInteractive"
             />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
-                `,
-              }}
-            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);} 
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+              `}
+            </Script>
           </>
         )}
       </head>
@@ -133,6 +135,7 @@ export default function RootLayout({
         <AutoAds publisherId={ADSENSE_CONFIG.publisherId} />
         <TouchOptimization>
           <Header />
+          {process.env.NEXT_PUBLIC_GA_ID ? <Analytics /> : null}
           <main className="flex-grow">{children}</main>
           <Footer />
         </TouchOptimization>

@@ -1,6 +1,7 @@
+"use client";
+
 import { AdUnit, MobileAd } from '../../components/AdSense';
 import { ADSENSE_CONFIG } from '../../lib/adsense';
-'use client';
 
 import { useState, useEffect } from 'react';
 import { 
