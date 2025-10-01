@@ -41,8 +41,9 @@ export default function CryptoConverter() {
     try {
       const conversion = await cryptoAPI.convertCrypto(numAmount, fromCrypto, toCrypto);
       setResult(conversion);
-    } catch (err: any) {
-      setError(err.message || "Conversion failed");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Conversion failed';
+      setError(message);
       setResult(null);
     } finally {
       setIsLoading(false);

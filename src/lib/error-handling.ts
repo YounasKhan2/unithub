@@ -32,8 +32,9 @@ const DEFAULT_RETRY_OPTIONS: RetryOptions = {
 
 // Network error detection
 function isNetworkError(error: any): boolean {
+  const isOffline = typeof navigator !== 'undefined' ? !navigator.onLine : false;
   return (
-    !navigator.onLine ||
+    isOffline ||
     error.code === 'NETWORK_ERROR' ||
     error.message?.includes('fetch') ||
     error.message?.includes('network') ||
@@ -149,6 +150,7 @@ export class CacheManager {
 
   set<T>(key: string, data: T, expirationMinutes: number = 10): void {
     try {
+      if (typeof window === 'undefined') return; // SSR guard
       const item = {
         data,
         expiration: Date.now() + (expirationMinutes * 60 * 1000)
@@ -161,6 +163,7 @@ export class CacheManager {
 
   get<T>(key: string): T | null {
     try {
+      if (typeof window === 'undefined') return null; // SSR guard
       const item = localStorage.getItem(this.prefix + key);
       if (!item) return null;
 
@@ -180,6 +183,7 @@ export class CacheManager {
 
   remove(key: string): void {
     try {
+      if (typeof window === 'undefined') return; // SSR guard
       localStorage.removeItem(this.prefix + key);
     } catch (error) {
       console.warn('Failed to remove cached data:', error);
@@ -188,6 +192,7 @@ export class CacheManager {
 
   clear(): void {
     try {
+      if (typeof window === 'undefined') return; // SSR guard
       const keys = Object.keys(localStorage);
       keys.forEach(key => {
         if (key.startsWith(this.prefix)) {
@@ -203,7 +208,8 @@ export class CacheManager {
 // Offline detection and fallback strategies
 export class OfflineManager {
   private static instance: OfflineManager;
-  private isOnline: boolean = navigator.onLine;
+  // Default to true on the server to avoid SSR reference to navigator
+  private isOnline: boolean = true;
   private listeners: Array<(isOnline: boolean) => void> = [];
 
   static getInstance(): OfflineManager {
@@ -214,8 +220,11 @@ export class OfflineManager {
   }
 
   constructor() {
-    // Only add event listeners in browser environment
+    // Only add event listeners and read navigator in browser environment
     if (typeof window !== 'undefined') {
+      // Initialize online state from navigator safely
+      this.isOnline = typeof navigator !== 'undefined' ? navigator.onLine : true;
+
       // Listen for online/offline events
       window.addEventListener('online', () => {
         this.isOnline = true;
@@ -230,10 +239,11 @@ export class OfflineManager {
   }
 
   getStatus(): boolean {
-    // Return true by default on server-side (assume online)
+    // On the server, assume online to allow prerendering to proceed
     if (typeof window === 'undefined') {
       return true;
     }
+    // In the browser, reflect current state
     return this.isOnline;
   }
 
@@ -325,10 +335,11 @@ export class PerformanceMonitor {
   private static measurements: Map<string, number[]> = new Map();
 
   static startMeasurement(label: string): () => number {
-    const startTime = performance.now();
+    const startTime = (typeof performance !== 'undefined' ? performance.now() : Date.now());
     
     return () => {
-      const duration = performance.now() - startTime;
+      const end = (typeof performance !== 'undefined' ? performance.now() : Date.now());
+      const duration = end - startTime;
       
       if (!this.measurements.has(label)) {
         this.measurements.set(label, []);

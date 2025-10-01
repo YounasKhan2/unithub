@@ -1,4 +1,4 @@
-'use client';
+// Note: This module is used from client pages but must remain SSR-safe.
 
 interface CryptoPriceResponse {
   [key: string]: {

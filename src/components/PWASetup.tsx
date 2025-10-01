@@ -14,17 +14,17 @@ export default function PWASetup() {
 
     // Helper: Detect if running as PWA (standalone mode)
     function isStandalone() {
-      if (typeof window === 'undefined') return false;
+  if (typeof window === 'undefined') return false;
       // Desktop Chrome/Edge/Opera, Android Chrome, iOS Safari
       return (
         window.matchMedia('(display-mode: standalone)').matches ||
-        (window.navigator as any).standalone === true ||
+  (typeof navigator !== 'undefined' && (window.navigator as any).standalone === true) ||
         document.referrer.startsWith('android-app://')
       );
     }
 
     // Register service worker
-    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+  if (typeof window !== 'undefined' && typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js')
         .then((registration) => {
           console.log('SW registered: ', registration);
@@ -105,13 +105,13 @@ export default function PWASetup() {
 
     // iOS install prompt (since iOS doesn't support beforeinstallprompt)
     function isIOS() {
-      return /iPad|iPhone|iPod/.test(navigator.userAgent);
+  return typeof navigator !== 'undefined' ? /iPad|iPhone|iPod/.test(navigator.userAgent) : false;
     }
     function isInStandaloneMode() {
-      if (typeof window === 'undefined') return false;
+  if (typeof window === 'undefined') return false;
       return (
         window.matchMedia('(display-mode: standalone)').matches ||
-        (window.navigator as any).standalone === true
+  (typeof navigator !== 'undefined' && (window.navigator as any).standalone === true)
       );
     }
     if (isIOS() && !isInStandaloneMode()) {

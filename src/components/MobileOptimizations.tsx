@@ -13,19 +13,24 @@ export default function TouchOptimization({ children, className = '' }: TouchOpt
   useEffect(() => {
     // Detect mobile device
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
+  if (typeof window === 'undefined') return;
+  setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', checkMobile);
+      return () => window.removeEventListener('resize', checkMobile);
+    }
+    return () => {};
   }, []);
 
   // Add mobile-specific optimizations
   useEffect(() => {
     if (isMobile) {
       // Prevent zoom on input focus for iOS
-      const metaViewport = document.querySelector('meta[name="viewport"]');
+  if (typeof document === 'undefined') return;
+  const metaViewport = document.querySelector('meta[name="viewport"]');
       if (metaViewport) {
         metaViewport.setAttribute('content', 
           'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover'
@@ -33,15 +38,18 @@ export default function TouchOptimization({ children, className = '' }: TouchOpt
       }
 
       // Add touch-specific styles
-      document.body.style.touchAction = 'manipulation';
-      (document.body.style as any).webkitTouchCallout = 'none';
-      (document.body.style as any).webkitUserSelect = 'none';
-      (document.body.style as any).webkitTapHighlightColor = 'transparent';
+      if (typeof document !== 'undefined') {
+        document.body.style.touchAction = 'manipulation';
+        (document.body.style as any).webkitTouchCallout = 'none';
+        (document.body.style as any).webkitUserSelect = 'none';
+        (document.body.style as any).webkitTapHighlightColor = 'transparent';
+      }
     }
 
     return () => {
       if (isMobile) {
-        const metaViewport = document.querySelector('meta[name="viewport"]');
+  if (typeof document === 'undefined') return;
+  const metaViewport = document.querySelector('meta[name="viewport"]');
         if (metaViewport) {
           metaViewport.setAttribute('content', 
             'width=device-width, initial-scale=1, viewport-fit=cover'
