@@ -111,6 +111,8 @@ export default function CurrencyConverter() {
             className="mx-auto desktop-banner"
             style={{ display: 'block', width: '728px', height: '90px', minWidth: '728px', minHeight: '90px', margin: '0 auto' }}
           />
+        </div>
+      </div>
       {/* Mobile Sticky Ad */}
       <MobileAd adSlot={ADSENSE_CONFIG.adSlots.mobileSticky} publisherId={ADSENSE_CONFIG.publisherId} />
       {/* Main Content */}
@@ -372,8 +374,6 @@ export default function CurrencyConverter() {
         </div>
       </main>
     </div>
-        </div>
-      </div>
-    </div>
+  </div>
   );
 }
