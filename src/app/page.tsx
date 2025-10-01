@@ -160,7 +160,7 @@ export default function HomePage() {
               <div className="h-full flex items-center justify-center bg-gray-100 rounded-xl p-4 border border-gray-200" style={{ minHeight: '300px' }}>
                 {/* Multiplex AdSense Ad */}
                 <MultiplexAd 
-                  adSlot="8379021884" 
+                  adSlot={ADSENSE_CONFIG.adSlots.multiplex}
                   publisherId={ADSENSE_CONFIG.publisherId}
                 />
               </div>

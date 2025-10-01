@@ -11,6 +11,9 @@ export const ADSENSE_CONFIG = {
   mobile: '9414284841',        // Mobile banner (320x50)
   mobileSticky: '9414284841',  // Mobile sticky bottom (320x50)
   converter: '9414284841',     // Converter pages specific
+  // Specific units
+  multiplex: '8379021884',     // Multiplex (feed/auto-relaxed)
+  article: '6885336185',       // In-article (fluid)
   }
 };
 

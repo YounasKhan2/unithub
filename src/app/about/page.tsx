@@ -105,7 +105,7 @@ export default function AboutPage() {
             </div>
             {/* In-Article Ad (native, fluid) */}
             <ArticleAd 
-              adSlot="6885336185" 
+              adSlot={ADSENSE_CONFIG.adSlots.article}
               publisherId={ADSENSE_CONFIG.publisherId}
             />
 
