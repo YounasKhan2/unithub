@@ -10,6 +10,7 @@ import ClientOnlyMeta from "@/components/ClientOnlyMeta";
 import AdSense, { AutoAds } from "@/components/AdSense";
 import Analytics from "@/components/Analytics";
 import Script from "next/script";
+import { Suspense } from "react";
 import { ADSENSE_CONFIG } from "@/lib/adsense";
 
 const geistSans = Geist({
@@ -135,7 +136,11 @@ export default function RootLayout({
         <AutoAds publisherId={ADSENSE_CONFIG.publisherId} />
         <TouchOptimization>
           <Header />
-          {process.env.NEXT_PUBLIC_GA_ID ? <Analytics /> : null}
+          {process.env.NEXT_PUBLIC_GA_ID ? (
+            <Suspense fallback={null}>
+              <Analytics />
+            </Suspense>
+          ) : null}
           <main className="flex-grow">{children}</main>
           <Footer />
         </TouchOptimization>
